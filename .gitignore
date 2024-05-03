@@ -1,6 +1,7 @@
 *.db
-__pycache__/
+__pycache__
 *.log
 .mypy_cache
 .ruff_cache
+.pytest_cache
 .env

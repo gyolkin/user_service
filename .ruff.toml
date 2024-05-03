@@ -6,7 +6,6 @@ extend-select = [
     "N",        # https://docs.astral.sh/ruff/settings/#pep8-naming
     "EM",       # https://docs.astral.sh/ruff/settings/#flake8-errmsg
     "ISC",      # https://docs.astral.sh/ruff/settings/#flake8-implicit-str-concat
-    "Q",        # https://docs.astral.sh/ruff/rules/#flake8-pytest-style-pt
     "TID",      # https://docs.astral.sh/ruff/rules/#flake8-tidy-imports-tid
 ]
 select = [
