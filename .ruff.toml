@@ -1,6 +1,7 @@
 line-length = 79
 src = ["src"]
 include = ["src/**.py", "tests/**.py"]
+exclude = ["src/user_service/infrastructure/sqla_db/migrations/**.py"]
 
 extend-select = [
     "N",        # https://docs.astral.sh/ruff/settings/#pep8-naming

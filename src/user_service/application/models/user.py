@@ -7,7 +7,7 @@ from uuid import UUID
 UserId = NewType('UserId', UUID)
 
 
-@dataclass(slots=True)
+@dataclass
 class User:
     id: UserId = field(init=False)
     login: str
