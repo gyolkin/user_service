@@ -1,10 +1,19 @@
 from uuid import uuid4
 from datetime import datetime
 
-from sqlalchemy import Integer, UUID, String, Column, MetaData, Table, DateTime
+from sqlalchemy import (
+    Integer,
+    UUID,
+    Enum,
+    String,
+    Column,
+    MetaData,
+    Table,
+    DateTime,
+)
 from sqlalchemy.orm import registry
 
-from user_service.application.models import User
+from user_service.application.models.user import User, UserDomain, UserEnv
 
 metadata_obj = MetaData()
 mapper_registry = registry()
@@ -16,8 +25,16 @@ user = Table(
     Column('login', String, nullable=False),
     Column('password', String, nullable=False),
     Column('project_id', UUID, nullable=False),
-    Column('env', String, nullable=False),
-    Column('domain', String, nullable=False),
+    Column(
+        'env',
+        Enum(UserEnv, values_callable=lambda enum: [e.value for e in enum]),
+        nullable=False,
+    ),
+    Column(
+        'domain',
+        Enum(UserDomain, values_callable=lambda enum: [e.value for e in enum]),
+        nullable=False,
+    ),
     Column('locktime', Integer, nullable=False, default=0),
     Column('created_at', DateTime, nullable=False, default=datetime.now),
 )

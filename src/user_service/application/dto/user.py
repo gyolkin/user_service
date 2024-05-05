@@ -3,7 +3,12 @@ from uuid import UUID
 
 from pydantic import TypeAdapter
 
-from user_service.application.models.user import User, UserId
+from user_service.application.models.user import (
+    User,
+    UserId,
+    UserDomain,
+    UserEnv,
+)
 
 from .base import BaseDto
 
@@ -12,16 +17,16 @@ class UserCreateDto(BaseDto):
     login: str
     password: str
     project_id: UUID
-    env: str
-    domain: str
+    env: UserEnv
+    domain: UserDomain
 
 
 class UserReadDto(BaseDto):
     id: UserId
     login: str
     project_id: UUID
-    env: str
-    domain: str
+    env: UserEnv
+    domain: UserDomain
     locktime: int
     created_at: datetime
 
