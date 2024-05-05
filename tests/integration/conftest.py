@@ -40,6 +40,6 @@ async def client(container: AsyncContainer):
     setup_dishka(container, app)
     async with AsyncClient(
         transport=ASGITransport(app=app),
-        base_url='http://test',
+        base_url='http://test/api',
     ) as client:
         yield client
