@@ -1,10 +1,10 @@
-from uuid import uuid4
+from uuid import UUID
 
 import pytest
 
 from user_service.application.use_cases.user import GetUsers
 from user_service.application.models import User
-from tests.unit.fixtures import FakeUserGateway
+from .fakes import FakeUserGateway
 
 
 @pytest.mark.asyncio
@@ -12,7 +12,7 @@ async def test_get_users(fake_gateway: FakeUserGateway):
     user = User(
         login='test',
         password='password',
-        project_id=uuid4(),
+        project_id=UUID('5b77bdba-de7b-4fcb-838f-8111b68e18ae'),
         env='prod',
         domain='canary',
     )

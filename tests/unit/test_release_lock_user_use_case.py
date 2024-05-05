@@ -1,4 +1,4 @@
-from uuid import uuid4
+from uuid import UUID
 
 import pytest
 
@@ -6,7 +6,7 @@ from user_service.application.use_cases.user import ReleaseLockUser
 from user_service.application.models import User, UserId
 from user_service.application.exceptions import EntityNotExistError
 from user_service.application.constants import USER_DOES_NOT_EXIST
-from tests.unit.fixtures import FakeUserGateway, FakeUnitOfWork
+from .fakes import FakeUserGateway, FakeUnitOfWork
 
 
 @pytest.mark.asyncio
@@ -17,7 +17,7 @@ async def test_release_lock_user(
     user = User(
         login='test',
         password='password',
-        project_id=uuid4(),
+        project_id=UUID('5b77bdba-de7b-4fcb-838f-8111b68e18ae'),
         env='prod',
         domain='canary',
         locktime=100,
@@ -42,7 +42,7 @@ async def test_release_lock_user_not_found(
     fake_gateway: FakeUserGateway,
     fake_uow: FakeUnitOfWork,
 ):
-    random_user_id = UserId(uuid4())
+    random_user_id = UserId(UUID('5b77bdba-de7b-4fcb-838f-8111b68e18ae'))
 
     release_lock = ReleaseLockUser(user_gateway=fake_gateway, uow=fake_uow)
     with pytest.raises(EntityNotExistError) as exc:

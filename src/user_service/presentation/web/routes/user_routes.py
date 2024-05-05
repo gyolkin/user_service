@@ -13,7 +13,7 @@ from user_service.application.models import UserId
 user_router = APIRouter(prefix='/users', tags=['Users'])
 
 
-@user_router.get('/')
+@user_router.get('')
 @inject
 async def get_users(
     get_users: FromDishka[GetUsers],
@@ -22,7 +22,7 @@ async def get_users(
     return await get_users()
 
 
-@user_router.post('/')
+@user_router.post('', status_code=status.HTTP_201_CREATED)
 @inject
 async def create_user(
     user_data: UserCreateDto,

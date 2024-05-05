@@ -8,8 +8,14 @@ from user_service.application.dto.user import (
     user_list_adapter,
 )
 from user_service.application.models import User, UserId
-from user_service.application.exceptions import EntityNotExistError
-from user_service.application.constants import USER_DOES_NOT_EXIST
+from user_service.application.exceptions import (
+    EntityNotExistError,
+    UserAlreadyLockedError,
+)
+from user_service.application.constants import (
+    USER_DOES_NOT_EXIST,
+    USER_ALREADY_LOCKED,
+)
 
 
 class GetUsers:
@@ -64,8 +70,9 @@ class AcquireLockUser:
         user = await self.user_gateway.get_user_by_id(user_id)
         if user is None:
             raise EntityNotExistError(USER_DOES_NOT_EXIST)
-        current_time = datetime.now()
-        user.locktime = calendar.timegm(current_time.timetuple())
+        if user.locktime != 0:
+            raise UserAlreadyLockedError(USER_ALREADY_LOCKED)
+        user.locktime = calendar.timegm(datetime.now().timetuple())
         await self.user_gateway.update_user(user)
         await self.uow.commit()
 

@@ -1,10 +1,10 @@
-import os
 from typing import AsyncIterable
 
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     AsyncSession,
+    AsyncEngine,
     create_async_engine,
 )
 
@@ -12,14 +12,21 @@ from user_service.infrastructure.sqla_db.models import metadata_obj  # noqa
 
 
 class ConnectionsProvider(Provider):
+    def __init__(self, db_uri: str):
+        super().__init__()
+        self.db_uri = db_uri
+
     @provide(scope=Scope.APP)
-    def sessionmaker(self) -> async_sessionmaker[AsyncSession]:
-        engine = create_async_engine(
-            os.getenv('DB_URI', 'sqlite+aiosqlite:///dev.db'),
-            echo=True,
-        )
+    def engine(self) -> AsyncEngine:
+        return create_async_engine(self.db_uri, echo=True)
+
+    @provide(scope=Scope.APP)
+    def sessionmaker(
+        self,
+        engine: AsyncEngine,
+    ) -> async_sessionmaker[AsyncSession]:
         return async_sessionmaker(
-            engine,
+            bind=engine,
             autoflush=False,
             expire_on_commit=False,
             class_=AsyncSession,

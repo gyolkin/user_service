@@ -1,6 +1,6 @@
 import pytest
 
-from .fixtures import FakeUserGateway, FakeUnitOfWork, FakePasswordManager
+from .fakes import FakeUserGateway, FakeUnitOfWork, FakePasswordManager
 
 
 @pytest.fixture
