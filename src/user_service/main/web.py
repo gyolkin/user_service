@@ -20,6 +20,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title='Users For E2E Testing',
         version='0.1.0',
+        description='Test task for VK Internship',
     )
     app.include_router(root_router)
     setup_exception_handlers(app)
@@ -31,6 +32,7 @@ def create_production_app() -> FastAPI:
     container = make_async_container(
         ConnectionsProvider(
             db_uri=os.getenv('DB_URI', 'sqlite+aiosqlite:///dev.db'),
+            db_echo=bool(os.getenv('DEBUG', True)),
         ),
         DatabaseProvider(),
         PasswordManagerProvider(),

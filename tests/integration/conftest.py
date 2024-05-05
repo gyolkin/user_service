@@ -17,7 +17,10 @@ from user_service.infrastructure.sqla_db.models import metadata_obj
 @pytest_asyncio.fixture
 async def container():
     container = make_async_container(
-        ConnectionsProvider(db_uri='sqlite+aiosqlite:///test.db'),
+        ConnectionsProvider(
+            db_uri='sqlite+aiosqlite:///test.db',
+            db_echo=False,
+        ),
         DatabaseProvider(),
         PasswordManagerProvider(),
         UseCasesProvider(),

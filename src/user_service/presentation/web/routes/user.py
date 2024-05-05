@@ -18,7 +18,7 @@ user_router = APIRouter(prefix='/users', tags=['Users'])
 async def get_users(
     get_users: FromDishka[GetUsers],
 ) -> list[UserReadDto]:
-    """Возвращает список всех пользователей в системе"""
+    """Returns a list of users"""
     return await get_users()
 
 
@@ -28,7 +28,7 @@ async def create_user(
     user_data: UserCreateDto,
     create_user: FromDishka[CreateUser],
 ) -> UserReadDto:
-    """Создает и возвращает нового пользователя"""
+    """Creates and returns a new user"""
     return await create_user(user_data)
 
 
@@ -38,7 +38,7 @@ async def acquire_lock_user(
     user_id: UserId,
     acquire_lock_user: FromDishka[AcquireLockUser],
 ) -> None:
-    """Накладывает блокировку на пользователя"""
+    """Locks the user"""
     return await acquire_lock_user(user_id)
 
 
@@ -48,5 +48,5 @@ async def release_lock_user(
     user_id: UserId,
     release_lock_user: FromDishka[ReleaseLockUser],
 ) -> None:
-    """Снимает блокировку с пользователя"""
+    """Unlocks the user"""
     return await release_lock_user(user_id)

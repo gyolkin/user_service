@@ -12,13 +12,14 @@ from user_service.infrastructure.sqla_db.models import metadata_obj  # noqa
 
 
 class ConnectionsProvider(Provider):
-    def __init__(self, db_uri: str):
+    def __init__(self, db_uri: str, db_echo: bool):
         super().__init__()
         self.db_uri = db_uri
+        self.db_echo = db_echo
 
     @provide(scope=Scope.APP)
     def engine(self) -> AsyncEngine:
-        return create_async_engine(self.db_uri, echo=True)
+        return create_async_engine(self.db_uri, echo=self.db_echo)
 
     @provide(scope=Scope.APP)
     def sessionmaker(
